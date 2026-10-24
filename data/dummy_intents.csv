@@ -1,0 +1,49 @@
+text,intent
+"Apa saja warna sepatu yang tersedia?",tanya_produk
+"Apakah ada sepatu ukuran 43?",tanya_produk
+"Sepatu ini bahannya apa?",tanya_produk
+"Tolong jelaskan model sepatu yang paling ringan",tanya_produk
+"Apakah sepatu ini cocok untuk lari?",tanya_produk
+"Apa perbedaan model A dan model B?",tanya_produk
+"Apakah ada garansi untuk sepatu ini?",tanya_produk
+"Sepatu mana yang cocok untuk dipakai sehari-hari?",tanya_produk
+"Boleh lihat foto detail sepatunya?",tanya_produk
+"Apakah sepatu ini tersedia dalam ukuran anak?",tanya_produk
+"Model apa saja yang sedang tersedia saat ini?",tanya_produk
+"Sepatu ini bisa dipakai untuk olahraga apa saja?",tanya_produk
+"Saya mau pesan satu pasang ukuran 42, bagaimana caranya?",pemesanan
+"Bagaimana cara memesan lewat Instagram?",pemesanan
+"Apakah saya bisa pesan lewat Shopee?",pemesanan
+"Saya mau pesan dua pasang, apakah bisa?",pemesanan
+"Bagaimana cara pembayaran untuk pemesanan?",pemesanan
+"Apakah pemesanan saya sudah diproses?",pemesanan
+"Boleh saya pesan dulu lalu bayar nanti?",pemesanan
+"Bagaimana cara mengubah pesanan saya?",pemesanan
+"Apakah ada ongkos kirim untuk pemesanan ini?",pemesanan
+"Saya mau pesan untuk hadiah, apakah bisa dibungkus?",pemesanan
+"Berapa lama proses pemesanan sampai dikirim?",pemesanan
+"Apakah pesanan saya bisa dibatalkan?",pemesanan
+"Sepatu yang saya terima ukurannya kekecilan, bagaimana solusinya?",keluhan
+"Sepatu saya ada cacat di solnya, apa yang harus saya lakukan?",keluhan
+"Pesanan saya belum sampai juga, kenapa ya?",keluhan
+"Saya kecewa karena warna yang datang berbeda",keluhan
+"Barang yang saya terima tidak sesuai foto, bagaimana?",keluhan
+"Saya mau komplain karena kemasan rusak",keluhan
+"Sepatu saya cepat rusak padahal baru dipakai sebentar",keluhan
+"Kenapa pesanan saya tertukar dengan orang lain?",keluhan
+"Saya tidak puas dengan pelayanan kemarin",keluhan
+"Barang saya hilang dalam pengiriman, bagaimana?",keluhan
+"Saya mau mengajukan pengembalian barang",keluhan
+"Tolong bantu, sepatu saya robek di bagian jahitan",keluhan
+"Berapa stok sepatu sneakers putih ukuran 41?",cek_stok_harga
+"Berapa harga sepatu sneakers putih?",cek_stok_harga
+"Apakah stok ukuran 40 masih ada?",cek_stok_harga
+"Berapa harga termurah yang tersedia?",cek_stok_harga
+"Cek stok untuk model hitam ukuran 42 dong",cek_stok_harga
+"Apakah ada diskon untuk produk ini?",cek_stok_harga
+"Berapa sisa stok produk ini?",cek_stok_harga
+"Harga sepatu ini berapa ya?",cek_stok_harga
+"Apakah stok produk ini menipis?",cek_stok_harga
+"Berapa harga sepatu ukuran 44?",cek_stok_harga
+"Stok sepatu putih masih berapa pasang?",cek_stok_harga
+"Apakah harga ini sudah termasuk ongkir?",cek_stok_harga

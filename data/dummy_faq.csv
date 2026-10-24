@@ -1,0 +1,7 @@
+id,question,answer
+1,"Jam berapa toko melayani pertanyaan?","DOKUMEN CONTOH (DUMMY). Toko contoh ini melayani pertanyaan pada jam kerja yang tertera di kanal penjualannya. Prototype ini tidak menyimpan jadwal nyata UMKM."
+2,"Bagaimana cara mengecek stok?","DOKUMEN CONTOH (DUMMY). Stok dicek dari data induk inventory prototype. Angka yang ditampilkan adalah data contoh, bukan stok nyata UMKM."
+3,"Apakah ada pengiriman ke luar kota?","DOKUMEN CONTOH (DUMMY). Pengiriman diurus secara manual lewat kanal penjualan. Prototype ini tidak memproses pengiriman, pembayaran, atau pesanan."
+4,"Bagaimana jika ukuran tidak cocok?","DOKUMEN CONTOH (DUMMY). Keluhan ukuran diteruskan ke pemilik usaha untuk ditindaklanjuti secara manual. Prototype ini tidak memproses pengembalian otomatis."
+5,"Apakah produk tersedia di semua kanal?","DOKUMEN CONTOH (DUMMY). Kanal penjualan yang dicatat sebagai label di prototype adalah Instagram, Facebook, Carousell, dan Shopee. Tidak ada sinkronisasi otomatis antar kanal di prototype ini."
+6,"Bagaimana cara merawat sepatu?","DOKUMEN CONTOH (DUMMY). Simpan di tempat kering, bersihkan dengan kain lembut, dan hindari rendaman air yang lama. Ini adalah panduan umum contoh, bukan klaim produk nyata."

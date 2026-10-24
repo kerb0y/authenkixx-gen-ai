@@ -1,0 +1,28 @@
+{
+  "data": "dummy labelled data only (gen-ai/data/dummy_intents.csv)",
+  "split": "stratified test_size=0.25 random_state=42",
+  "class_counts": {
+    "tanya_produk": 12,
+    "pemesanan": 12,
+    "keluhan": 12,
+    "cek_stok_harga": 12
+  },
+  "train_size": 36,
+  "test_size": 12,
+  "models": {
+    "logistic_regression_C1": {
+      "accuracy": 0.6667,
+      "macro_f1": 0.575
+    },
+    "multinomial_nb": {
+      "accuracy": 0.6667,
+      "macro_f1": 0.5685
+    },
+    "logistic_regression_tuned": {
+      "accuracy": 0.75,
+      "macro_f1": 0.6518,
+      "best_C": 10.0,
+      "best_cv_macro_f1": 0.8075
+    }
+  }
+}

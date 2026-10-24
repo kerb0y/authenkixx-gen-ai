@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+scikit-learn
+pydantic
+httpx  # needed only for fastapi TestClient in tests
