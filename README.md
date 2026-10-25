@@ -1,219 +1,232 @@
-# Gen AI Prototype (Authenkixx Capstone)
+# Prototype Gen AI (Capstone Authenkixx)
 
-Prototype only. By Ade Bintang. All data is dummy. No real UMKM data,
-no customer data, no passwords, no automatic platform sync.
+Ini masih prototype, ya. Dibuat oleh Ade Bintang. Semua datanya
+dummy. Nggak ada data asli UMKM, nggak ada data customer, nggak ada
+password, dan nggak ada sinkronisasi otomatis ke platform lain.
 
-## Phase 1 (2026-10-25): what changed
+## Yang berubah di Fase 1 (25 Oktober 2026)
 
-- Out-of-context refusal strengthened beyond the keyword guardrail
-  (see the new section below). Test results on dummy data:
-  24/24 out-of-context questions refused (10 v1 + 14 new Phase 1
-  questions), 12/12 in-scope questions NOT refused, API smoke
-  tests 4/4. New code: `app/refusal.py`; new tests:
-  `tests/test_in_scope.py` and the expanded
-  `tests/test_out_of_context.py`.
-- `ChatResponse` now includes `refusal_layer` (null for answered
-  questions; `keyword`, `product_reference`, `domain_coverage`,
-  or `low_evidence_fallback` for refusals), so the demo can show
-  which layer fired.
-- TF-IDF RAG was NOT replaced with a vector store in Phase 1;
-  that decision (TF-IDF vs ChromaDB/FAISS) is still open for
-  Ade/the team.
-- Phase 1 changes are local only and have NOT been pushed yet.
+- Penolakan pertanyaan di luar konteks sekarang lebih kuat dari
+  sekadar daftar kata kunci (lihat bagian baru di bawah). Hasil
+  test di data dummy: 24/24 pertanyaan di luar konteks ditolak
+  (10 dari v1 ditambah 14 pertanyaan baru di Fase 1), 12/12
+  pertanyaan yang masih dalam konteks NGGAK ditolak, dan smoke test
+  API 4/4. Kode barunya ada di `app/refusal.py`, test barunya ada di
+  `tests/test_in_scope.py` dan `tests/test_out_of_context.py` yang
+  sudah diperluas.
+- `ChatResponse` sekarang ikut menampilkan `refusal_layer` (null
+  kalau pertanyaan dijawab, atau `keyword`, `product_reference`,
+  `domain_coverage`, atau `low_evidence_fallback` kalau ditolak),
+  jadi pas demo kelihatan lapis mana yang bekerja.
+- RAG TF-IDF NGGAK diganti jadi vector store di Fase 1, keputusan
+  itu (TF-IDF vs ChromaDB/FAISS) masih terbuka buat Ade dan tim.
+- Fase 1 ini sudah di-push ke GitHub.
 
-## Problem this model solves
+## Masalah apa yang diselesaikan model ini
 
-The shop owner gets repeated questions about products, stock, prices,
-ordering steps, and complaints across several channels. This service
-classifies a question into an intent, retrieves a relevant dummy FAQ /
-product document, and routes the question: product and stock/price
-questions to prototype retrieval, order questions to a manual-order
-note, and complaints to the owner. It does NOT create orders,
-payments, shipments, or returns.
+Pemilik toko itu sering banget ditanya hal yang itu-itu saja soal
+produk, stok, harga, cara pesan, dan komplain, dari berbagai kanal.
+Service ini tugasnya mengklasifikasikan pertanyaan ke satu intent,
+mengambil dokumen FAQ atau produk dummy yang relevan, terus
+mengarahkan pertanyaannya: pertanyaan produk dan stok/harga ke
+retrieval prototype, pertanyaan pesanan ke catatan pesanan manual,
+dan komplain ke pemilik. Yang jelas, service ini NGGAK bikin pesanan,
+pembayaran, pengiriman, atau retur.
 
-## Run
+## Cara jalanin
 
 ```bash
 pip install -r requirements.txt
 uvicorn app.main:app --reload --port 8000
 ```
 
-Interactive API docs (Swagger/OpenAPI): http://127.0.0.1:8000/docs
+Dokumentasi API interaktif (Swagger/OpenAPI):
+http://127.0.0.1:8000/docs
 Health: http://127.0.0.1:8000/health
 
-The Full-Stack backend proxies to this service. The frontend never
-calls this service directly.
+Backend Full-Stack yang jadi perantara ke service ini. Frontend
+nggak pernah manggil service ini langsung.
 
-## Preprocessing (before the model)
+## Preprocessing (sebelum masuk model)
 
-`app/preprocessing.py`: lowercase, strip punctuation, collapse
-whitespace, remove a small Indonesian stopword list. Empty input or
-input with no usable words after preprocessing returns HTTP 422 with
-a clear message.
+`app/preprocessing.py`: diubah ke huruf kecil semua, tanda baca
+dihapus, spasi berlebih dirapikan, dan stopword Bahasa Indonesia
+yang kecil-kecil dibuang. Kalau input-nya kosong atau nggak ada kata
+yang bisa dipakai setelah preprocessing, dibalas HTTP 422 dengan
+pesan yang jelas.
 
-## Data (dummy only)
+## Data (cuma dummy)
 
-- `data/dummy_intents.csv`: 48 labelled examples, 12 per intent.
-- `data/dummy_faq.csv`: 6 dummy FAQ documents.
-- `data/dummy_products.csv`: 6 dummy products (same dummy catalogue
-  shape as the Full-Stack inventory).
+- `data/dummy_intents.csv`: 48 contoh berlabel, 12 per intent.
+- `data/dummy_faq.csv`: 6 dokumen FAQ dummy.
+- `data/dummy_products.csv`: 6 produk dummy (bentuk katalog dummy-nya
+  sama kayak inventory di Full-Stack).
 
-Class balance: the dummy set is balanced (12 / 12 / 12 / 12), so no
-resampling was needed. LogisticRegression still uses
-`class_weight="balanced"` as a safeguard for the final version, when
-real data may be imbalanced. If real data turns out imbalanced, the
-final version must report the counts, the handling (e.g. class
-weights or resampling), and its effect, before claiming any result.
+Keseimbangan kelas: dataset dummy ini seimbang (12 / 12 / 12 / 12),
+jadi nggak perlu resampling. LogisticRegression tetap pakai
+`class_weight="balanced"` buat jaga-jaga di versi final, kalau data
+aslinya ternyata nggak seimbang. Kalau nanti data aslinya memang
+nggak seimbang, versi final wajib melaporkan jumlahnya, cara
+menanganinya (misalnya class weight atau resampling), dan efeknya,
+sebelum mengklaim hasil apa pun.
 
-## Model comparison (dummy data, same metric, same split)
+## Perbandingan model (data dummy, metrik dan split yang sama)
 
-Split: stratified, test_size=0.25, random_state=42 (train 36, test 12).
-Metric: accuracy and macro F1 on the held-out test set.
-Run: `python scripts/train_compare.py` (output in
+Split: stratified, test_size=0.25, random_state=42 (train 36,
+test 12). Metrik: accuracy dan macro F1 di test set yang dipisahkan.
+Jalankan: `python scripts/train_compare.py` (output-nya di
 `outputs/model_comparison.json`).
 
-| Model / configuration | Accuracy (test) | Macro F1 (test) |
+| Model / konfigurasi | Accuracy (test) | Macro F1 (test) |
 |---|---|---|
 | TF-IDF + LogisticRegression (C=1.0) | 0.6667 | 0.5750 |
 | TF-IDF + MultinomialNB | 0.6667 | 0.5685 |
 | TF-IDF + LogisticRegression, tuned (C=10.0) | 0.7500 | 0.6518 |
 
-Hyperparameter tuning: GridSearchCV over C in [0.1, 1.0, 10.0] with
-3-fold CV on the training split only gave best C=10.0 with CV macro
-F1 0.8075. Tuning improved test accuracy from 0.6667 to 0.7500 and
-test macro F1 from 0.5750 to 0.6518 on this dummy set.
+Tuning hyperparameter: GridSearchCV buat C di [0.1, 1.0, 10.0]
+dengan 3-fold CV yang cuma dipakai di training split saja, hasilnya
+C terbaik 10.0 dengan CV macro F1 0.8075. Tuning ini menaikkan
+accuracy test dari 0.6667 jadi 0.7500 dan macro F1 test dari 0.5750
+jadi 0.6518 di dataset dummy ini.
 
-Selection reason: the tuned LogisticRegression is selected because it
-has the highest test accuracy and macro F1 of the three. Honest
-limitation: the test set has only 12 dummy examples, so these numbers
-are a pipeline demo, not evidence about real user questions. The
-served model in `app/classifier.py` is the tuned configuration
-(C=10.0). The final version must retrain and re-compare on larger,
-owner-decided data and update this table.
+Alasan pemilihan: LogisticRegression yang sudah di-tuning dipilih
+karena accuracy dan macro F1 test-nya paling tinggi dari ketiganya.
+Batasan yang jujur: test set-nya cuma 12 contoh dummy, jadi angka
+ini cuma demo pipeline, bukan bukti performa buat pertanyaan asli.
+Model yang dipakai service di `app/classifier.py` adalah konfigurasi
+tuned (C=10.0). Versi final wajib latih ulang dan bandingkan ulang
+di data yang lebih besar dan sudah diputuskan pemiliknya, terus
+tabel ini diperbarui.
 
-## Generative AI feature
+## Fitur AI generatif
 
-Optional and off by default. Set `GENAI_API_KEY` in the environment
-(never in source code; see `.env.example`) to enable a proprietary
-model call. When no key is set, `/chat` returns the RAG/template
-answer with `generative_ai: "disabled_no_api_key"`. When the service
-fails or times out, it falls back to the RAG/template answer with
-`generative_ai: "failed_fell_back_to_rag"` instead of crashing.
-Structured prompts live in `app/prompts.py` (system prompt, few-shot
-examples, intent routes).
+Opsional dan default-nya mati. Atur `GENAI_API_KEY` di environment
+(jangan pernah ditulis di kode, lihat `.env.example`) buat
+mengaktifkan panggilan ke model proprietary. Kalau key-nya nggak
+diset, `/chat` membalas jawaban RAG/template dengan status
+`generative_ai: "disabled_no_api_key"`. Kalau service-nya gagal atau
+timeout, jawabannya fallback ke RAG/template dengan status
+`generative_ai: "failed_fell_back_to_rag"`, bukan malah crash.
+Prompt terstruktur ada di `app/prompts.py` (system prompt, contoh
+few-shot, dan rute intent).
 
-## RAG (prototype retrieval, not a real vector integration)
+## RAG (retrieval prototype, bukan integrasi vector beneran)
 
-`app/rag.py` is TF-IDF cosine retrieval over the dummy FAQ and dummy
-product documents. It is NOT ChromaDB, FAISS, Pinecone, or Weaviate,
-and it does NOT use an embedding model. A production RAG with an
-embedding model and a vector store is tomorrow's work (see root
-README). Retrieved documents are labelled dummy in every answer.
+`app/rag.py` itu retrieval TF-IDF cosine atas dokumen FAQ dummy dan
+dokumen produk dummy. Ini BUKAN ChromaDB, FAISS, Pinecone, atau
+Weaviate, dan NGGAK pakai embedding model. RAG produksi dengan
+embedding model dan vector store itu kerjaan lanjutan (lihat README
+di root). Dokumen yang diambil selalu dilabeli dummy di tiap jawaban.
 
-## Out-of-context refusal (Phase 1: strengthened, still a prototype)
+## Penolakan pertanyaan di luar konteks (Fase 1: diperkuat, tetap prototype)
 
-The chatbot refuses questions outside the dummy shop context with a
-polite message. Refusal now uses four layers, in order (see
-`app/refusal.py` for the data-driven layers):
+Chatbot menolak pertanyaan di luar konteks toko dummy dengan pesan
+yang sopan. Penolakannya sekarang pakai empat lapis, berurutan
+(lihat `app/refusal.py` buat lapis yang berbasis data):
 
-1. Keyword guardrail (v1, kept): an explicit out-of-scope topic
-   keyword list in `app/main.py`. This is a prototype layer, not a
-   production out-of-distribution detector.
-2. Product-reference check (Phase 1, new): if the predicted intent
-   is `cek_stok_harga` but the question names no shop product (no
-   "sepatu" and no dummy product-name token), refuse. This catches
-   price questions about non-shop items that otherwise score high
-   confidence from the word "harga" alone. Measured in Phase 1:
-   "Berapa harga tiket pesawat ke Singapura?" reached classifier
-   confidence 0.944 in v1, because it mimics the "harga sepatu"
-   training example, and is now refused by this layer.
-3. Domain-coverage gate (Phase 1, new, data-driven): refuse when
-   ALL of these hold for a question with no product anchor:
-   vocabulary coverage <= 0.50 (at most half of its preprocessed
-   tokens appear in the in-scope TF-IDF vocabulary, classifier
-   vocabulary plus retriever vocabulary, both trained on dummy
-   data only), RAG best score < 0.40, nearest-training-example
-   cosine similarity < 0.60, and classifier confidence < 0.85.
-   The product-anchor exception is deliberate: a question that
-   mentions "sepatu" (or a dummy product name) is in the shop's
-   product domain, so this gate does not refuse it even when its
-   coverage is low (measured: "Sepatu apa saja yang dijual di
-   sini?" has coverage 0.33 but confidence 0.87 and a clear
-   product anchor, and is correctly answered).
-4. Low-evidence fallback (v1, kept): refuse when RAG best score
-   < 0.10 AND classifier confidence < 0.35.
+1. Guardrail kata kunci (v1, dipertahankan): daftar kata kunci topik
+   di luar konteks yang eksplisit di `app/main.py`. Ini lapis
+   prototype, bukan detektor out-of-distribution produksi.
+2. Cek referensi produk (Fase 1, baru): kalau intent yang
+   diprediksi itu `cek_stok_harga` tapi pertanyaannya nggak
+   menyebut produk toko sama sekali (nggak ada kata "sepatu" dan
+   nggak ada token nama produk dummy), pertanyaan ditolak. Ini
+   nangkep pertanyaan harga soal barang lain yang skor
+   confidence-nya bisa tinggi cuma gara-gara kata "harga" saja.
+   Terukur di Fase 1: "Berapa harga tiket pesawat ke Singapura?"
+   di v1 dapat confidence 0.944, karena mirip contoh latihan
+   "harga sepatu", dan sekarang ditolak lewat lapis ini.
+3. Domain-coverage gate (Fase 1, baru, berbasis data): tolak kalau
+   SEMUA kondisi ini terpenuhi buat pertanyaan tanpa anchor produk:
+   cakupan kosakata <= 0.50 (paling banter setengah token hasil
+   preprocessing-nya muncul di kosakata TF-IDF dalam konteks, baik
+   kosakata classifier maupun retriever, keduanya dilatih cuma dari
+   data dummy), skor RAG terbaik < 0.40, cosine similarity ke contoh
+   latihan terdekat < 0.60, dan confidence classifier < 0.85.
+   Pengecualian anchor produk itu sengaja: pertanyaan yang menyebut
+   "sepatu" (atau nama produk dummy) itu masih masuk domain produk
+   toko, jadi gate ini nggak menolaknya walaupun cakupannya rendah
+   (terukur: "Sepatu apa saja yang dijual di sini?" cakupannya
+   0.33 tapi confidence-nya 0.87 dan anchor produknya jelas, dan
+   dijawab dengan benar).
+4. Fallback bukti rendah (v1, dipertahankan): tolak kalau skor RAG
+   terbaik < 0.10 DAN confidence classifier < 0.35.
 
-Thresholds are prototype values tuned on dummy data, not
-production guarantees. Remaining limitation, stated honestly: this
-is still a prototype guardrail, NOT a production
-out-of-distribution detector. A question that mentions a shop
-product but is really about something else, and a bare price
-question with no product named ("Berapa harganya?" with no product
-context), can still be mis-routed or refused, because this service
-is stateless and has no conversation history. Do not claim
-production-grade OOD detection for this service.
+Threshold di atas itu nilai prototype yang di-tuning dari data
+dummy, bukan jaminan produksi. Batasan yang masih ada, disampaikan
+dengan jujur: ini tetap guardrail prototype, BUKAN detektor
+out-of-distribution produksi. Pertanyaan yang menyebut produk toko
+tapi sebenarnya soal hal lain, dan pertanyaan harga polos tanpa
+menyebut produk ("Berapa harganya?" tanpa konteks produk), masih
+bisa salah rute atau ketolak, karena service ini stateless dan
+nggak punya riwayat percakapan. Jangan klaim deteksi OOD kelas
+produksi buat service ini.
 
-Tested out-of-context questions (24/24 refused in Phase 1,
-verified by running `tests/test_out_of_context.py`):
+Pertanyaan di luar konteks yang sudah dites (24/24 ditolak di Fase 1,
+terverifikasi dengan menjalankan `tests/test_out_of_context.py`):
 
-1. Siapa presiden Indonesia saat ini? -> refused
-2. Bagaimana cara memasak rendang yang enak? -> refused
-3. Berapa skor pertandingan sepak bola semalam? -> refused
-4. Apa ramalan cuaca besok di Jakarta? -> refused
-5. Jelaskan teori relativitas Einstein secara detail -> refused
-6. Berapa harga saham perusahaan teknologi hari ini? -> refused
-7. Ceritakan dongeng sebelum tidur untuk anak -> refused
-8. Bagaimana cara mendaftar CPNS tahun ini? -> refused
-9. Apa itu blockchain dan bagaimana cara investasi crypto? -> refused
-10. Tolong buatkan skripsi saya dari awal sampai akhir -> refused (keyword)
+1. Siapa presiden Indonesia saat ini? -> ditolak
+2. Bagaimana cara memasak rendang yang enak? -> ditolak
+3. Berapa skor pertandingan sepak bola semalam? -> ditolak
+4. Apa ramalan cuaca besok di Jakarta? -> ditolak
+5. Jelaskan teori relativitas Einstein secara detail -> ditolak
+6. Berapa harga saham perusahaan teknologi hari ini? -> ditolak
+7. Ceritakan dongeng sebelum tidur untuk anak -> ditolak
+8. Bagaimana cara mendaftar CPNS tahun ini? -> ditolak
+9. Apa itu blockchain dan bagaimana cara investasi crypto? -> ditolak
+10. Tolong buatkan skripsi saya dari awal sampai akhir -> ditolak (keyword)
 
-Phase 1 set (14 new, none contains a v1 keyword; these are the
-proof the data-driven layers add coverage):
-11. Bagaimana cara mengurus paspor baru? -> refused (domain_coverage)
-12. Berapa biaya kuliah semester ini di kampus? -> refused (domain_coverage)
-13. Tolong jelaskan cara kerja mesin mobil diesel -> refused (domain_coverage)
-14. Apa jadwal kereta api ke Bandung besok pagi? -> refused (domain_coverage)
-15. Bagaimana cara daftar SIM online? -> refused (domain_coverage)
-16. Berapa gaji rata-rata programmer di Jakarta? -> refused (domain_coverage)
-17. Tolong buatkan itinerary liburan ke Bali 3 hari -> refused (domain_coverage)
-18. Siapa pemenang lomba menyanyi tadi malam? -> refused (domain_coverage)
-19. Bagaimana cara beternak ayam petelur di rumah? -> refused (domain_coverage)
-20. Berapa harga tiket pesawat ke Singapura? -> refused (product_reference)
-21. Jelaskan sejarah kerajaan Majapahit secara singkat -> refused (domain_coverage)
-22. Apa manfaat olahraga lari pagi untuk jantung? -> refused (domain_coverage)
-23. Bagaimana cara mengajukan KPR rumah pertama? -> refused (domain_coverage)
-24. Berapa tarif parkir di mal Jakarta Selatan? -> refused (domain_coverage)
+Set Fase 1 (14 baru, nggak ada yang mengandung kata kunci v1, ini
+bukti lapis berbasis data memang menambah cakupan):
+11. Bagaimana cara mengurus paspor baru? -> ditolak (domain_coverage)
+12. Berapa biaya kuliah semester ini di kampus? -> ditolak (domain_coverage)
+13. Tolong jelaskan cara kerja mesin mobil diesel -> ditolak (domain_coverage)
+14. Apa jadwal kereta api ke Bandung besok pagi? -> ditolak (domain_coverage)
+15. Bagaimana cara daftar SIM online? -> ditolak (domain_coverage)
+16. Berapa gaji rata-rata programmer di Jakarta? -> ditolak (domain_coverage)
+17. Tolong buatkan itinerary liburan ke Bali 3 hari -> ditolak (domain_coverage)
+18. Siapa pemenang lomba menyanyi tadi malam? -> ditolak (domain_coverage)
+19. Bagaimana cara beternak ayam petelur di rumah? -> ditolak (domain_coverage)
+20. Berapa harga tiket pesawat ke Singapura? -> ditolak (product_reference)
+21. Jelaskan sejarah kerajaan Majapahit secara singkat -> ditolak (domain_coverage)
+22. Apa manfaat olahraga lari pagi untuk jantung? -> ditolak (domain_coverage)
+23. Bagaimana cara mengajukan KPR rumah pertama? -> ditolak (domain_coverage)
+24. Berapa tarif parkir di mal Jakarta Selatan? -> ditolak (domain_coverage)
 
-In-scope counter-tests (Phase 1, must NOT be refused, verified by
-running `tests/test_in_scope.py`): 12/12 not refused. The questions
-cover stock, price, product availability, ordering steps, and
-complaints, all naming a shop product or a clear shop context
-(for example "Berapa stok sepatu sneakers putih?",
-"Bagaimana cara memesan sepatu sneakers hitam?", and "Sepatu saya
-rusak setelah dipakai seminggu, bagaimana komplainnya?"). This
-file exists to prove the stronger refusal did not simply refuse
-everything.
+Test tandingan dalam konteks (Fase 1, wajib NGGAK ditolak,
+terverifikasi dengan menjalankan `tests/test_in_scope.py`): 12/12
+nggak ditolak. Pertanyaannya mencakup stok, harga, ketersediaan
+produk, langkah pemesanan, dan komplain, semuanya menyebut produk
+toko atau konteks toko yang jelas (contohnya "Berapa stok sepatu
+sneakers putih?", "Bagaimana cara memesan sepatu sneakers hitam?",
+dan "Sepatu saya rusak setelah dipakai seminggu, bagaimana
+komplainnya?"). File ini ada buat membuktikan penolakan yang lebih
+kuat ini nggak asal menolak semuanya.
 
-## Invalid input and service failure handling
+## Kalau input nggak valid dan service gagal
 
-- Empty message: HTTP 422 with a clear message.
-- Invalid JSON / wrong types: FastAPI/Pydantic validation errors.
-- Generative service down or slow: fallback answer, clear status in
-  `generative_ai` field, no crash.
-- Backend proxy down: the Full-Stack backend returns HTTP 502 with a
-  clear message (see fullstack README).
+- Pesan kosong: HTTP 422 dengan pesan yang jelas.
+- JSON nggak valid atau tipe datanya salah: error validasi
+  FastAPI/Pydantic.
+- Service generatif down atau lambat: jawaban fallback, status yang
+  jelas di field `generative_ai`, tanpa crash.
+- Proxy backend down: backend Full-Stack membalas HTTP 502 dengan
+  pesan yang jelas (lihat README fullstack).
 
-## Tests
+## Test
 
 ```bash
-python tests/test_out_of_context.py   # 24/24 refused (Phase 1, verified)
-python tests/test_in_scope.py         # 12/12 not refused (Phase 1, verified)
-python -c "from tests.test_api import *; ..."  # see test_api.py (4 smoke tests, verified)
+python tests/test_out_of_context.py   # 24/24 ditolak (Fase 1, terverifikasi)
+python tests/test_in_scope.py         # 12/12 nggak ditolak (Fase 1, terverifikasi)
+python -c "from tests.test_api import *; ..."  # lihat test_api.py (4 smoke test, terverifikasi)
 ```
 
-Note: `tests/test_api.py` uses FastAPI TestClient, which needs the
-`httpx` package listed in requirements.txt.
+Catatan: `tests/test_api.py` pakai FastAPI TestClient, yang butuh
+package `httpx` yang sudah ada di requirements.txt.
 
 ## Disclaimer
 
-See CHECKLIST_STATUS.md in this repo. Phase 1 is not the final version. The final target is to match the Authenkixx use-case document and fulfil all Main Quest checklist items for Full-Stack, Gen AI, and Data Science. Phase 1 does not yet claim full checklist compliance.
+Lihat CHECKLIST_STATUS.md di repo ini. Fase 1 bukan versi final.
+Target akhirnya adalah menyesuaikan dokumen use case Authenkixx dan
+memenuhi semua checklist Main Quest buat Full-Stack, Gen AI, dan
+Data Science. Fase 1 belum mengklaim sudah memenuhi semuanya.
