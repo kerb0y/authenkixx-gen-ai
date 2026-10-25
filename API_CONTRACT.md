@@ -1,7 +1,9 @@
 # Shared API Contract (Prototype)
 
 Agreed across Full-Stack, Gen AI, and Data Science repos. Prototype
-only, dummy data only. Version: v1, 2026-10-24.
+only, dummy data only. Version: Phase 1, 2026-10-25 (v1 was
+2026-10-24; Phase 1 changes are local only and have not been pushed
+yet; the main agent pushes after verification).
 
 ## General rules
 
@@ -34,7 +36,7 @@ Base URL: `/api/v1/`
 | DELETE | `/products/:id` | - | Deleted product |
 | GET | `/movements?product_id=` | query param (optional) | Stock movement list |
 | POST | `/products/:id/stock` | `{ type: "in" \| "out", quantity: int >= 1, note?: string }` | `{ product, movement }` (201) |
-| GET | `/insights` | - | `{ total_products, total_stock, low_stock_count, low_stock_products[], by_availability, data_label: "dummy" }` |
+| GET | `/insights` | - | `{ total_products, total_stock, low_stock_count, low_stock_products[], by_availability, data_label: "dummy", data_science, data_science_note }` (Phase 1: see Insights shape below) |
 | POST | `/ai/chat` | `{ message: string (1-500 chars) }` | Gen AI ChatResponse, wrapped, plus `history_id` |
 | GET | `/ai/history` | - | Chat history entries `{ message, intent, route, answer, created_at }` |
 
@@ -54,6 +56,38 @@ Product shape:
 updates the backend recomputes it: stock 0 = `habis`, stock <= 5 =
 `menipis`, otherwise `tersedia`. `channels` are labels only; there is
 NO automatic synchronisation with any platform.
+
+## Insights shape (Phase 1)
+
+`GET /api/v1/insights` now includes a Data Science section, read
+from files (not a live Data Science API):
+
+- Source files: `data-science/outputs/business_summary.json` and
+  `data-science/outputs/baseline_model.json`.
+- Directory: configurable via the `DS_OUTPUTS_DIR` environment
+  variable. Default: `../../data-science/outputs` relative to
+  `fullstack/backend` (i.e. the prototype root's
+  `data-science/outputs` folder).
+- When the files are present:
+  ```json
+  {
+    "data_science": {
+      "business_summary": { "data_label": "dummy", "rows": 600, "total_units_sold_dummy": 633, "total_revenue_dummy_idr": 203667000, "units_by_channel_dummy": {}, "units_by_product_dummy": {}, "low_stock_rows_dummy": 149, "final_stock_dummy": {} },
+      "baseline_model": { "data_label": "dummy", "accuracy": 0.7833, "macro_f1": 0.7044, "train_rows": 40, "test_rows": 60 },
+      "source_dir": "<DS outputs directory>",
+      "data_label": "dummy"
+    },
+    "data_science_note": "Data Science outputs loaded from DS_OUTPUTS_DIR; all figures are dummy data."
+  }
+  ```
+- When either file is missing or unreadable, the endpoint NEVER
+  crashes. It returns the inventory-only insights with
+  `"data_science": null` plus a clear `data_science_note` naming the
+  directory that was tried.
+- The frontend business summary page displays the Data Science
+  totals, units by channel, low-stock summary, and baseline model
+  metrics from this section, all labelled dummy. When
+  `data_science` is null it shows the note instead.
 
 ## Gen AI Service (FastAPI, port 8000)
 
@@ -86,6 +120,11 @@ ChatResponse:
   `failed_fell_back_to_rag`, `not_used_rag_answer`,
   `not_used_routed_to_owner`, `not_used_manual_order`, or
   `not_used_refused`.
+- `refusal_layer` (Phase 1, null for answered questions):
+  `keyword`, `product_reference`, `domain_coverage`, or
+  `low_evidence_fallback`. See the Gen AI README for thresholds and
+  the remaining limitation: this is a prototype guardrail, NOT a
+  production out-of-distribution detector.
 - `pemesanan` (order questions) and `keluhan` (complaints) are
   routing only: the prototype does NOT create orders, payments,
   shipments, or returns.
@@ -99,14 +138,15 @@ ChatResponse:
   and split description.
 - `data-science/data/dummy_inventory_sales.csv`: see
   `data-science/data/data_dictionary.md` for columns.
-- Final-version integration point (tomorrow): the backend
-  `/api/v1/insights` endpoint is where Data Science outputs should be
-  served once real data is confirmed; the Streamlit dashboard remains
-  the interactive view.
+- Phase 1 integration (done): the backend `/api/v1/insights`
+  endpoint now serves these outputs in its `data_science` section
+  (see Insights shape above); the Streamlit dashboard remains the
+  interactive view.
 
 ## Out of scope (all repos)
 
 Automatic two-way sync to Instagram, Facebook, Carousell, or Shopee;
 orders, payments, shipping, promotions, customer data, price
 recommendations, stock forecasting as a production feature, and any
-real UMKM data until the PIC confirms it.
+real UMKM data until the owner (Ade) decides to use it. There is no
+external approver to wait for; data choices are the owner's decision.

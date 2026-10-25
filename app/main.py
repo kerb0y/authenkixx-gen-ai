@@ -28,6 +28,7 @@ from app.prompts import (
 )
 from app.rag import PrototypeRetriever
 from app.preprocessing import preprocess
+from app.refusal import RefusalChecker
 
 # Out-of-context rule (tuned on dummy data, documented in README):
 # 1) Explicit out-of-scope topic guardrail (prototype keyword list, not
@@ -56,6 +57,7 @@ app = FastAPI(
 
 _MODEL = build_classifier()
 _RETRIEVER = PrototypeRetriever()
+_REFUSAL = RefusalChecker(_MODEL, _RETRIEVER)
 
 
 class ChatRequest(BaseModel):
@@ -70,6 +72,10 @@ class ChatResponse(BaseModel):
     retrieved_docs: list[str]
     rag_best_score: float
     generative_ai: str
+    # Phase 1 transparency: which refusal layer fired, if any.
+    # None for answered questions; "keyword", "product_reference",
+    # "domain_coverage", or "low_evidence_fallback" for refusals.
+    refusal_layer: str | None = None
 
 
 @app.get("/health")
@@ -98,7 +104,7 @@ def _answer(message: str, generative: bool) -> ChatResponse:
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
 
-    # Explicit out-of-scope topic guardrail, checked first.
+    # Layer 1: explicit out-of-scope topic guardrail, checked first.
     if set(cleaned.split()) & OUT_OF_SCOPE_KEYWORDS:
         return ChatResponse(
             intent=None,
@@ -108,6 +114,7 @@ def _answer(message: str, generative: bool) -> ChatResponse:
             retrieved_docs=[],
             rag_best_score=0.0,
             generative_ai="not_used_refused",
+            refusal_layer="keyword",
         )
 
     intent, confidence = classify(_MODEL, message)
@@ -115,7 +122,26 @@ def _answer(message: str, generative: bool) -> ChatResponse:
     best_score = retrieved[0][1] if retrieved else 0.0
     docs = [doc for doc, _ in retrieved if _ >= 0.05]
 
-    # Out-of-context refusal.
+    # Phase 1 data-driven layers (see app/refusal.py): product
+    # reference, domain coverage, and the v1 low-evidence fallback.
+    # The v1 thresholds below are kept as the fallback constants;
+    # the data-driven layers use their own thresholds in refusal.py.
+    layer, _metrics = _REFUSAL.check(message, intent, confidence, best_score)
+    if layer is not None:
+        return ChatResponse(
+            intent=None,
+            intent_confidence=round(confidence, 4),
+            route="refused_out_of_context",
+            answer=OUT_OF_CONTEXT_REPLY,
+            retrieved_docs=[],
+            rag_best_score=round(best_score, 4),
+            generative_ai="not_used_refused",
+            refusal_layer=layer,
+        )
+
+    # Legacy v1 fallback, retained for completeness (the checker
+    # above already covers it, but this keeps the original guard
+    # visible if the checker is ever bypassed).
     if best_score < RAG_SIMILARITY_THRESHOLD and confidence < CLASSIFIER_CONFIDENCE_THRESHOLD:
         return ChatResponse(
             intent=None,
@@ -125,6 +151,7 @@ def _answer(message: str, generative: bool) -> ChatResponse:
             retrieved_docs=[],
             rag_best_score=round(best_score, 4),
             generative_ai="not_used_refused",
+            refusal_layer="low_evidence_fallback",
         )
 
     route = INTENT_ROUTES.get(intent, "rag")
