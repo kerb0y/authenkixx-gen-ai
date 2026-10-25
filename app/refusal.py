@@ -49,6 +49,38 @@ from .preprocessing import preprocess
 
 PRODUCT_ANCHOR_TOKENS = {"sepatu", "sneakers", "kasual", "slip"}
 
+# Since the Nike dummy catalogue update, a question that names a
+# Nike model (for example "Berapa stok Nike Air Force 1?") must
+# also count as a product anchor, even without the word "sepatu".
+# Anchor tokens are therefore extended at runtime with distinctive
+# tokens from data/dummy_products.csv. Only tokens with at least
+# 4 letters are used, and the common word "air" is excluded, so a
+# stray digit like "3" in an out-of-context question (for example
+# "itinerary liburan ke Bali 3 hari") does not accidentally count
+# as a product anchor.
+import csv as _csv
+import os as _os
+
+_EXCLUDED_ANCHOR_TOKENS = {"contoh", "air"}
+
+def _product_anchor_tokens():
+    tokens = set(PRODUCT_ANCHOR_TOKENS)
+    tokens.update({"nike", "running", "trail", "basketball", "training", "sandal", "clogs"})
+    path = _os.path.join(
+        _os.path.dirname(__file__), "..", "data", "dummy_products.csv"
+    )
+    try:
+        with open(path, encoding="utf-8") as f:
+            for row in _csv.DictReader(f):
+                for tok in preprocess(row["product_name_dummy"]).split():
+                    if len(tok) >= 4 and tok not in _EXCLUDED_ANCHOR_TOKENS:
+                        tokens.add(tok)
+    except OSError:
+        pass
+    return tokens
+
+PRODUCT_ANCHOR_TOKENS = _product_anchor_tokens()
+
 COVERAGE_THRESHOLD = 0.50
 RAG_THRESHOLD = 0.40
 NEAREST_TRAINING_THRESHOLD = 0.60

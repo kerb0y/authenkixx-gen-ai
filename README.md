@@ -59,8 +59,26 @@ pesan yang jelas.
 
 - `data/dummy_intents.csv`: 48 contoh berlabel, 12 per intent.
 - `data/dummy_faq.csv`: 6 dokumen FAQ dummy.
-- `data/dummy_products.csv`: 6 produk dummy (bentuk katalog dummy-nya
-  sama kayak inventory di Full-Stack).
+- `data/dummy_products.csv`: 120 produk Nike dummy (NK-DUMMY-001
+  sampai NK-DUMMY-120, katalog yang sama dengan inventory
+  Full-Stack), dengan harga, stok, ketersediaan, dan kanal contoh.
+
+## Data baru: katalog Nike dan anchor produk (25 Oktober 2026)
+
+- Katalog produk diganti dari 6 produk generik ke 120 produk Nike
+  dummy yang sama dengan inventory Full-Stack, supaya chat soal
+  model Nike (misalnya "Berapa stok Nike Air Force 1?") bisa
+  dijawab dari dokumen produk yang beneran ada.
+- Supaya pertanyaan itu nggak ketolak, anchor produk di
+  `app/refusal.py` diperluas dengan token khas dari nama produk
+  (misalnya force, pegasus, dunk, terra, kiger, calm, slide),
+  ditambah kata "nike" dan kategori. Token angka dan kata umum
+  seperti "air" sengaja dikecualikan, supaya pertanyaan di luar
+  konteks yang kebetulan mengandung angka (misalnya "itinerary
+  liburan ke Bali 3 hari") tetap ditolak.
+- Test tandingan dalam konteks bertambah 1 pertanyaan Nike, jadi
+  sekarang 13/13 nggak ditolak, sementara penolakan di luar konteks
+  tetap 24/24 ditolak.
 
 Keseimbangan kelas: dataset dummy ini seimbang (12 / 12 / 12 / 12),
 jadi nggak perlu resampling. LogisticRegression tetap pakai

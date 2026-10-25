@@ -77,8 +77,10 @@ result.
 
 ## Data warning
 
-All figures in Phase 1 are dummy, labelled dummy. The inventory
-summary (6 dummy products, current stock) and the Data Science
-summary (600 dummy rows, September 2026 dummy, 5 dummy products)
-are separate dummy datasets and must not be merged into one summary
-as if they came from one source.
+All figures are dummy, labelled dummy. Since the Nike dummy
+update, inventory and Data Science use the SAME product set:
+120 Nike dummy products (NK-DUMMY-001 to NK-DUMMY-120) and
+86,400 dummy sales rows (2026-01-01 to 2026-06-29). The old
+Phase 1 mismatch (6-product inventory vs 600-row September 2026
+summary) no longer applies to the current outputs; do not mix
+old and new figures in one summary.

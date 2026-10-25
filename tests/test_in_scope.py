@@ -1,10 +1,14 @@
-"""In-scope tests (Phase 1): 12 questions that must NOT be refused.
+"""In-scope tests (Phase 1, plus Nike catalogue update): 13 questions
+that must NOT be refused.
 
 This file exists to prove the stronger refusal did not simply
 refuse everything. Every question below names a shop product or a
 clear shop context (order, complaint, stock, price, channel label),
 so the product-anchor and domain-coverage gates must let it through
 to a real route (rag, manual_order, or owner). All data is dummy.
+The 13th question was added with the Nike dummy catalogue: a Nike
+model name alone must count as a product anchor, even without the
+word "sepatu".
 
 Run (no server, no API key needed):
   python tests/test_in_scope.py
@@ -31,6 +35,7 @@ IN_SCOPE_QUESTIONS = [
     "Berapa harga sepatu sneakers merah?",
     "Kapan stok sepatu merah akan ditambah?",
     "Toko ini jual sepatu apa saja di Instagram?",
+    "Berapa stok Nike Air Force 1?",
 ]
 
 ALLOWED_ROUTES = {"rag", "manual_order", "owner"}

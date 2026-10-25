@@ -1,7 +1,121 @@
 product_code,product_name_dummy,price_dummy_idr,stock_dummy,availability_dummy,channels_dummy
-DUMMY-001,Sepatu Sneakers Putih (Contoh),299000,12,tersedia,Instagram;Shopee
-DUMMY-002,Sepatu Sneakers Hitam (Contoh),329000,4,menipis,Instagram;Facebook
-DUMMY-003,Sepatu Lari Ringan (Contoh),459000,0,habis,Shopee;Carousell
-DUMMY-004,Sepatu Kasual Cokelat (Contoh),279000,20,tersedia,Facebook;Carousell
-DUMMY-005,Sepatu Slip-On Abu (Contoh),249000,7,tersedia,Instagram;Carousell
-DUMMY-006,Sepatu Sneakers Merah (Contoh),349000,3,menipis,Shopee;Instagram
+NK-DUMMY-001,Nike Air Force 1 '07 (Contoh),1401000,25,tersedia,Facebook;Instagram
+NK-DUMMY-002,Nike Air Max 90 (Contoh),1655000,18,tersedia,Instagram;Shopee
+NK-DUMMY-003,Nike Air Max 270 (Contoh),1407000,18,tersedia,Shopee;Instagram;Facebook;Carousell
+NK-DUMMY-004,Nike Dunk Low (Contoh),3030000,8,tersedia,Facebook;Shopee
+NK-DUMMY-005,Nike Blazer Mid '77 (Contoh),2769000,35,tersedia,Carousell;Instagram;Facebook;Shopee
+NK-DUMMY-006,Nike Cortez (Contoh),2780000,18,tersedia,Instagram;Carousell
+NK-DUMMY-007,Nike Air Jordan 1 Mid (Contoh),2252000,35,tersedia,Carousell;Facebook;Shopee
+NK-DUMMY-008,Nike Air Max 97 (Contoh),2392000,25,tersedia,Facebook;Carousell
+NK-DUMMY-009,Nike Air Max SC (Contoh),2853000,8,tersedia,Facebook;Carousell;Shopee;Instagram
+NK-DUMMY-010,Nike P-6000 (Contoh),2942000,8,tersedia,Carousell;Instagram
+NK-DUMMY-011,Nike Air Max Pulse (Contoh),1884000,8,tersedia,Carousell;Shopee
+NK-DUMMY-012,Nike Dunk High (Contoh),2934000,12,tersedia,Shopee;Instagram
+NK-DUMMY-013,Nike Air Force 1 '07 (Contoh),1954000,25,tersedia,Instagram;Facebook;Carousell
+NK-DUMMY-014,Nike Air Max 90 (Contoh),2328000,60,tersedia,Instagram;Carousell
+NK-DUMMY-015,Nike Air Max 270 (Contoh),1755000,8,tersedia,Shopee;Instagram
+NK-DUMMY-016,Nike Dunk Low (Contoh),3349000,25,tersedia,Instagram;Carousell;Facebook;Shopee
+NK-DUMMY-017,Nike Blazer Mid '77 (Contoh),3471000,50,tersedia,Carousell;Facebook;Instagram;Shopee
+NK-DUMMY-018,Nike Cortez (Contoh),2279000,1,menipis,Instagram;Shopee;Facebook;Carousell
+NK-DUMMY-019,Nike Air Jordan 1 Mid (Contoh),3245000,50,tersedia,Carousell;Shopee
+NK-DUMMY-020,Nike Air Max 97 (Contoh),2122000,25,tersedia,Carousell;Facebook;Shopee
+NK-DUMMY-021,Nike Air Max SC (Contoh),2683000,0,habis,Facebook;Carousell;Instagram;Shopee
+NK-DUMMY-022,Nike P-6000 (Contoh),2236000,1,menipis,Carousell;Instagram
+NK-DUMMY-023,Nike Air Max Pulse (Contoh),2176000,18,tersedia,Shopee;Instagram;Facebook;Carousell
+NK-DUMMY-024,Nike Dunk High (Contoh),2750000,12,tersedia,Instagram;Carousell;Shopee
+NK-DUMMY-025,Nike Air Force 1 '07 (Contoh),1746000,8,tersedia,Shopee;Instagram
+NK-DUMMY-026,Nike Air Max 90 (Contoh),2322000,35,tersedia,Shopee;Carousell
+NK-DUMMY-027,Nike Air Max 270 (Contoh),1359000,50,tersedia,Facebook;Shopee
+NK-DUMMY-028,Nike Dunk Low (Contoh),1539000,4,menipis,Shopee;Facebook
+NK-DUMMY-029,Nike Blazer Mid '77 (Contoh),3292000,4,menipis,Facebook;Instagram;Carousell
+NK-DUMMY-030,Nike Cortez (Contoh),3251000,12,tersedia,Facebook;Instagram;Carousell;Shopee
+NK-DUMMY-031,Nike Air Jordan 1 Mid (Contoh),2952000,3,menipis,Facebook;Carousell;Instagram;Shopee
+NK-DUMMY-032,Nike Air Max 97 (Contoh),3440000,8,tersedia,Facebook;Carousell;Shopee
+NK-DUMMY-033,Nike Air Max SC (Contoh),2527000,12,tersedia,Instagram;Facebook
+NK-DUMMY-034,Nike P-6000 (Contoh),1599000,18,tersedia,Carousell;Instagram;Facebook;Shopee
+NK-DUMMY-035,Nike Air Max Pulse (Contoh),3093000,35,tersedia,Instagram;Carousell;Facebook
+NK-DUMMY-036,Nike Dunk High (Contoh),2382000,3,menipis,Facebook;Shopee
+NK-DUMMY-037,Nike Air Force 1 '07 (Contoh),2132000,25,tersedia,Shopee;Facebook;Instagram
+NK-DUMMY-038,Nike Air Max 90 (Contoh),1479000,0,habis,Carousell;Instagram
+NK-DUMMY-039,Nike Air Max 270 (Contoh),1338000,3,menipis,Instagram;Facebook
+NK-DUMMY-040,Nike Dunk Low (Contoh),1821000,1,menipis,Instagram;Facebook;Shopee
+NK-DUMMY-041,Nike Blazer Mid '77 (Contoh),2747000,25,tersedia,Facebook;Instagram;Carousell
+NK-DUMMY-042,Nike Cortez (Contoh),2033000,25,tersedia,Shopee;Carousell;Instagram
+NK-DUMMY-043,Nike Air Jordan 1 Mid (Contoh),2865000,35,tersedia,Facebook;Instagram;Shopee
+NK-DUMMY-044,Nike Air Max 97 (Contoh),2212000,0,habis,Shopee;Facebook
+NK-DUMMY-045,Nike Air Max SC (Contoh),2737000,18,tersedia,Carousell;Instagram;Shopee
+NK-DUMMY-046,Nike P-6000 (Contoh),1455000,3,menipis,Carousell;Shopee;Facebook
+NK-DUMMY-047,Nike Air Max Pulse (Contoh),1772000,12,tersedia,Facebook;Shopee;Instagram;Carousell
+NK-DUMMY-048,Nike Dunk High (Contoh),2106000,12,tersedia,Carousell;Shopee
+NK-DUMMY-049,Nike Pegasus 41 (Contoh),2973000,35,tersedia,Carousell;Shopee;Facebook;Instagram
+NK-DUMMY-050,Nike Pegasus 40 (Contoh),1759000,5,menipis,Facebook;Carousell;Shopee
+NK-DUMMY-051,Nike Vomero 17 (Contoh),2121000,8,tersedia,Carousell;Facebook;Shopee
+NK-DUMMY-052,Nike Invincible 3 (Contoh),2468000,25,tersedia,Instagram;Facebook
+NK-DUMMY-053,Nike Structure 25 (Contoh),2185000,2,menipis,Carousell;Instagram
+NK-DUMMY-054,Nike Winflo 11 (Contoh),2000000,60,tersedia,Instagram;Facebook;Carousell;Shopee
+NK-DUMMY-055,Nike React Infinity 4 (Contoh),2317000,8,tersedia,Instagram;Facebook
+NK-DUMMY-056,Nike Zoom Fly 5 (Contoh),2450000,1,menipis,Instagram;Facebook
+NK-DUMMY-057,Nike Streakfly (Contoh),2643000,18,tersedia,Shopee;Carousell;Facebook
+NK-DUMMY-058,Nike Alphafly 3 (Contoh),2420000,8,tersedia,Carousell;Shopee
+NK-DUMMY-059,Nike Pegasus 41 (Contoh),2399000,2,menipis,Facebook;Shopee;Carousell
+NK-DUMMY-060,Nike Pegasus 40 (Contoh),1782000,4,menipis,Facebook;Carousell;Instagram
+NK-DUMMY-061,Nike Vomero 17 (Contoh),2610000,12,tersedia,Facebook;Shopee
+NK-DUMMY-062,Nike Invincible 3 (Contoh),2923000,0,habis,Shopee;Facebook;Instagram;Carousell
+NK-DUMMY-063,Nike Structure 25 (Contoh),2601000,25,tersedia,Facebook;Shopee;Instagram;Carousell
+NK-DUMMY-064,Nike Winflo 11 (Contoh),2187000,18,tersedia,Facebook;Shopee;Instagram
+NK-DUMMY-065,Nike React Infinity 4 (Contoh),2711000,18,tersedia,Instagram;Carousell
+NK-DUMMY-066,Nike Zoom Fly 5 (Contoh),1871000,1,menipis,Carousell;Instagram;Facebook
+NK-DUMMY-067,Nike Streakfly (Contoh),2068000,25,tersedia,Carousell;Instagram;Facebook
+NK-DUMMY-068,Nike Alphafly 3 (Contoh),2215000,5,menipis,Instagram;Shopee
+NK-DUMMY-069,Nike Pegasus 41 (Contoh),2771000,4,menipis,Shopee;Carousell
+NK-DUMMY-070,Nike Pegasus 40 (Contoh),2451000,25,tersedia,Facebook;Carousell;Instagram
+NK-DUMMY-071,Nike Vomero 17 (Contoh),2684000,0,habis,Shopee;Facebook;Instagram
+NK-DUMMY-072,Nike Invincible 3 (Contoh),1707000,25,tersedia,Instagram;Carousell;Shopee
+NK-DUMMY-073,Nike Structure 25 (Contoh),1640000,12,tersedia,Instagram;Facebook;Carousell
+NK-DUMMY-074,Nike Winflo 11 (Contoh),2800000,35,tersedia,Facebook;Shopee;Instagram
+NK-DUMMY-075,Nike React Infinity 4 (Contoh),2760000,25,tersedia,Shopee;Facebook;Carousell;Instagram
+NK-DUMMY-076,Nike Zoom Fly 5 (Contoh),2070000,35,tersedia,Shopee;Carousell
+NK-DUMMY-077,Nike Streakfly (Contoh),1557000,12,tersedia,Facebook;Shopee;Instagram
+NK-DUMMY-078,Nike Alphafly 3 (Contoh),2071000,35,tersedia,Instagram;Carousell;Shopee
+NK-DUMMY-079,Nike Pegasus Trail 5 (Contoh),2799000,18,tersedia,Shopee;Carousell
+NK-DUMMY-080,Nike Terra Kiger 10 (Contoh),1989000,8,tersedia,Facebook;Shopee;Carousell
+NK-DUMMY-081,Nike Zegama 2 (Contoh),2670000,60,tersedia,Carousell;Facebook;Shopee;Instagram
+NK-DUMMY-082,Nike Wildhorse 9 (Contoh),3276000,5,menipis,Facebook;Instagram
+NK-DUMMY-083,Nike Ultrafly (Contoh),3282000,18,tersedia,Carousell;Instagram;Shopee;Facebook
+NK-DUMMY-084,Nike Trail 4 (Contoh),1827000,25,tersedia,Carousell;Instagram
+NK-DUMMY-085,Nike Juniper Trail 3 (Contoh),3105000,35,tersedia,Instagram;Shopee;Facebook
+NK-DUMMY-086,Nike Pegasus Trail 5 (Contoh),2176000,50,tersedia,Shopee;Instagram;Carousell
+NK-DUMMY-087,Nike Terra Kiger 10 (Contoh),3088000,25,tersedia,Facebook;Carousell
+NK-DUMMY-088,Nike Zegama 2 (Contoh),2041000,18,tersedia,Facebook;Carousell;Shopee
+NK-DUMMY-089,Nike Wildhorse 9 (Contoh),3004000,60,tersedia,Instagram;Carousell;Shopee
+NK-DUMMY-090,Nike Ultrafly (Contoh),3151000,2,menipis,Facebook;Carousell
+NK-DUMMY-091,Nike Trail 4 (Contoh),2721000,25,tersedia,Carousell;Instagram;Shopee
+NK-DUMMY-092,Nike Juniper Trail 3 (Contoh),1944000,25,tersedia,Facebook;Shopee;Instagram
+NK-DUMMY-093,Nike Pegasus Trail 5 (Contoh),2343000,35,tersedia,Instagram;Shopee
+NK-DUMMY-094,Nike Terra Kiger 10 (Contoh),2390000,12,tersedia,Carousell;Shopee;Facebook
+NK-DUMMY-095,Nike Zegama 2 (Contoh),2695000,2,menipis,Shopee;Carousell
+NK-DUMMY-096,Nike Wildhorse 9 (Contoh),1986000,5,menipis,Instagram;Carousell;Facebook;Shopee
+NK-DUMMY-097,Nike Calm Slide (Contoh),783000,5,menipis,Shopee;Carousell;Facebook;Instagram
+NK-DUMMY-098,Nike Offcourt Slide (Contoh),827000,25,tersedia,Carousell;Facebook
+NK-DUMMY-099,Nike Victori One Slide (Contoh),1062000,0,habis,Carousell;Facebook
+NK-DUMMY-100,Nike Calm Mule (Contoh),1025000,35,tersedia,Shopee;Facebook
+NK-DUMMY-101,Nike Calm Sandal (Contoh),1136000,25,tersedia,Instagram;Shopee;Facebook
+NK-DUMMY-102,Nike Asuna 2 Slide (Contoh),947000,35,tersedia,Instagram;Shopee;Carousell
+NK-DUMMY-103,Nike Calm Slide (Contoh),513000,18,tersedia,Facebook;Instagram
+NK-DUMMY-104,Nike Offcourt Slide (Contoh),1009000,50,tersedia,Carousell;Facebook;Shopee
+NK-DUMMY-105,Nike Victori One Slide (Contoh),647000,12,tersedia,Facebook;Instagram;Shopee;Carousell
+NK-DUMMY-106,Nike Calm Mule (Contoh),772000,35,tersedia,Carousell;Shopee;Facebook
+NK-DUMMY-107,Nike Calm Sandal (Contoh),852000,8,tersedia,Shopee;Facebook;Carousell;Instagram
+NK-DUMMY-108,Nike Asuna 2 Slide (Contoh),738000,35,tersedia,Instagram;Facebook;Carousell
+NK-DUMMY-109,Nike G.T. Cut 3 (Contoh),3380000,60,tersedia,Shopee;Instagram
+NK-DUMMY-110,Nike Ja 3 (Contoh),3158000,35,tersedia,Instagram;Carousell;Facebook
+NK-DUMMY-111,Nike Sabrina 3 (Contoh),2431000,2,menipis,Carousell;Shopee;Facebook
+NK-DUMMY-112,Nike LeBron 22 (Contoh),3984000,12,tersedia,Shopee;Carousell;Instagram
+NK-DUMMY-113,Nike KD 17 (Contoh),2730000,25,tersedia,Instagram;Carousell;Shopee
+NK-DUMMY-114,Nike Book 1 (Contoh),1917000,1,menipis,Carousell;Facebook
+NK-DUMMY-115,Nike Metcon 9 (Contoh),2386000,12,tersedia,Facebook;Instagram
+NK-DUMMY-116,Nike Free Metcon 6 (Contoh),1792000,12,tersedia,Facebook;Instagram;Shopee;Carousell
+NK-DUMMY-117,Nike SuperRep Go 3 (Contoh),2251000,35,tersedia,Facebook;Instagram;Shopee;Carousell
+NK-DUMMY-118,Nike Zoom Metcon (Contoh),1811000,12,tersedia,Facebook;Shopee;Carousell
+NK-DUMMY-119,Nike MC Trainer 3 (Contoh),2034000,18,tersedia,Instagram;Carousell;Facebook
+NK-DUMMY-120,Nike Flex Experience 12 (Contoh),2316000,35,tersedia,Facebook;Carousell;Shopee
