@@ -9,7 +9,7 @@ password, dan nggak ada sinkronisasi otomatis ke platform lain.
 - Penolakan pertanyaan di luar konteks sekarang lebih kuat dari
   sekadar daftar kata kunci (lihat bagian baru di bawah). Hasil
   test di data dummy: 24/24 pertanyaan di luar konteks ditolak
-  (10 dari v1 ditambah 14 pertanyaan baru di Fase 1), 12/12
+  (10 dari v1 ditambah 14 pertanyaan baru di Fase 1), 13/13
   pertanyaan yang masih dalam konteks NGGAK ditolak, dan smoke test
   API 4/4. Kode barunya ada di `app/refusal.py`, test barunya ada di
   `tests/test_in_scope.py` dan `tests/test_out_of_context.py` yang
@@ -212,7 +212,7 @@ bukti lapis berbasis data memang menambah cakupan):
 24. Berapa tarif parkir di mal Jakarta Selatan? -> ditolak (domain_coverage)
 
 Test tandingan dalam konteks (Fase 1, wajib NGGAK ditolak,
-terverifikasi dengan menjalankan `tests/test_in_scope.py`): 12/12
+terverifikasi dengan menjalankan `tests/test_in_scope.py`): 13/13
 nggak ditolak. Pertanyaannya mencakup stok, harga, ketersediaan
 produk, langkah pemesanan, dan komplain, semuanya menyebut produk
 toko atau konteks toko yang jelas (contohnya "Berapa stok sepatu
@@ -235,7 +235,7 @@ kuat ini nggak asal menolak semuanya.
 
 ```bash
 python tests/test_out_of_context.py   # 24/24 ditolak (Fase 1, terverifikasi)
-python tests/test_in_scope.py         # 12/12 nggak ditolak (Fase 1, terverifikasi)
+python tests/test_in_scope.py         # 13/13 nggak ditolak (Fase 1, terverifikasi)
 python -c "from tests.test_api import *; ..."  # lihat test_api.py (4 smoke test, terverifikasi)
 ```
 

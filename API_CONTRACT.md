@@ -43,12 +43,12 @@ Base URL: `/api/v1/`
 Product shape:
 ```json
 {
-  "id": "DUMMY-001",
-  "name": "Sepatu Sneakers Putih (Contoh)",
-  "price": 299000,
-  "stock": 12,
+  "id": "NK-DUMMY-001",
+  "name": "Nike Air Force 1 '07 (Contoh)",
+  "price": 1401000,
+  "stock": 25,
   "availability": "tersedia",
-  "channels": ["Instagram", "Shopee"],
+  "channels": ["Facebook", "Instagram"],
   "data_label": "dummy"
 }
 ```
@@ -72,8 +72,8 @@ from files (not a live Data Science API):
   ```json
   {
     "data_science": {
-      "business_summary": { "data_label": "dummy", "rows": 600, "total_units_sold_dummy": 633, "total_revenue_dummy_idr": 203667000, "units_by_channel_dummy": {}, "units_by_product_dummy": {}, "low_stock_rows_dummy": 149, "final_stock_dummy": {} },
-      "baseline_model": { "data_label": "dummy", "accuracy": 0.7833, "macro_f1": 0.7044, "train_rows": 40, "test_rows": 60 },
+      "business_summary": { "data_label": "dummy", "rows": 86400, "total_units_sold_dummy": 82526, "total_revenue_dummy_idr": 186375340000, "units_by_channel_dummy": {}, "units_by_product_dummy": {}, "low_stock_rows_dummy": 21600, "final_stock_dummy": {} },
+      "baseline_model": { "data_label": "dummy", "accuracy": 0.75, "macro_f1": 0.4286, "train_rows": 96, "test_rows": 24 },
       "source_dir": "<DS outputs directory>",
       "data_label": "dummy"
     },
@@ -136,8 +136,12 @@ ChatResponse:
   (all labelled dummy).
 - `data-science/outputs/baseline_model.json`: baseline model metrics
   and split description.
-- `data-science/data/dummy_inventory_sales.csv`: see
-  `data-science/data/data_dictionary.md` for columns.
+- `data-science/data/nike_dummy/nike_sales_dummy.csv` and
+  `data-science/data/nike_dummy/nike_products_dummy.csv`: see
+  `data-science/data/nike_dummy/nike_data_dictionary.md` for
+  columns. The old 600-row `dummy_inventory_sales.csv` stays in
+  `data-science/data/` as an archive only and is no longer the
+  dashboard source.
 - Phase 1 integration (done): the backend `/api/v1/insights`
   endpoint now serves these outputs in its `data_science` section
   (see Insights shape above); the Streamlit dashboard remains the
